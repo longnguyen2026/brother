@@ -25,17 +25,24 @@ echo "[3/4] Cài đặt driver HL-L2360D (mặc định kết nối USB)..."
 printf 'y\ny\ny\ny\nn\nn\n' | bash linux-brprinter-installer HL-L2360D
 
 echo "[4/4] Cấu hình tính năng in 2 mặt (Duplex) trên CUPS..."
-# Tìm tên máy in HL-L2360D đã đăng ký trong hệ thống CUPS
-PRINTER_NAME=$(lpstat -p 2>/dev/null | awk '{print $2}' | grep -i "HLL2360D\|HL-L2360D" | head -n 1)
+systemctl restart cups
+sleep 2
+
+PRINTER_NAME=$(lpstat -p 2>/dev/null | awk '{print $2}' | grep -Ei "2360|HLL2360" | head -n 1)
 
 if [ -n "$PRINTER_NAME" ]; then
-  # Thiết lập in đảo mặt cạnh dài (Long-Edge) làm mặc định
+  # Set ở cấp admin hệ thống
   lpadmin -p "$PRINTER_NAME" -o Duplex=DuplexNoTumble
+  
+  # Set cho CUPS default instance toàn hệ thống
+  lpoptions -d "$PRINTER_NAME" -o Duplex=DuplexNoTumble
+  
+  # Set cho user đang chạy lệnh (hoặc SUDO_USER nếu chạy qua sudo)
+  if [ -n "$SUDO_USER" ]; then
+    su - "$SUDO_USER" -c "lpoptions -p $PRINTER_NAME -o Duplex=DuplexNoTumble"
+  fi
+
   echo "[+] Đã kích hoạt in 2 mặt mặc định cho: $PRINTER_NAME"
 else
-  echo "[!] Cảnh báo: Không tìm thấy tên máy in trong danh sách CUPS. Hãy kiểm tra lại kết nối cáp USB."
+  echo "[!] Chưa phát hiện tên máy in trong CUPS."
 fi
-
-# Dọn dẹp thư mục tạm
-rm -rf "$TEMP_DIR"
-echo "[✓] Hoàn tất cài đặt driver và cấu hình in 2 mặt!"
