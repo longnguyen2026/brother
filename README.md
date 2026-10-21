@@ -1,6 +1,6 @@
 # Lệnh cài driver máy in brother L12360d
 ````bash
-bash <(curl -fsSL https://raw.githubusercontent.com/<username>/<repo>/main/install-brother-l2360d.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/longnguyen2026/brother/main/install-brother-l2360d.sh)
 ````
 ## Lệnh kiểm tra sau khi cài
 ````bash
