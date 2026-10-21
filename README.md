@@ -2,6 +2,10 @@
 ````bash
 bash <(curl -fsSL https://raw.githubusercontent.com/longnguyen2026/brother/main/brother-l2360d.sh)
 ````
+````bash
+curl -fsSL https://raw.githubusercontent.com/longnguyen2026/brother/main/brother-l2360d.sh) | sudo bash
+````
+
 ## Lệnh kiểm tra sau khi cài
 ````bash
 lpoptions -p $(lpstat -p | awk '{print $2}' | grep -i "2360" | head -n 1) -l | grep Duplex
