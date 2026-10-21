@@ -3,7 +3,7 @@
 bash <(curl -fsSL https://raw.githubusercontent.com/longnguyen2026/brother/main/brother-l2360d.sh)
 ````
 ````bash
-curl -fsSL https://raw.githubusercontent.com/longnguyen2026/brother/main/brother-l2360d.sh) | sudo bash
+curl -fsSL https://raw.githubusercontent.com/longnguyen2026/brother/main/brother-l2360d.sh | sudo bash
 ````
 
 ## Lệnh kiểm tra sau khi cài
